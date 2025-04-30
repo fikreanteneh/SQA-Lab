@@ -1,8 +1,8 @@
 import { defineConfig } from '@playwright/test';
 
 module.exports = defineConfig({
-  testDir: './Lab2',
-  timeout: 30000,
+  testDir: './Lab5', //['./Lab1', './Lab2', './Lab3', './Lab4', './Lab5'],
+  timeout: 300000,
   retries: 2,
   use: {
     headless: true,

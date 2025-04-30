@@ -1,5 +1,18 @@
 import { expect, test } from '@playwright/test';
 
+test('Correct Credential', async ({ page }) => {
+  await page.goto('https://demo.nopcommerce.com/login');
+  await page
+    .getByRole('textbox', { name: 'Email:' })
+    .fill('fikremariam.a.asegie@gmail.com');
+  await page.getByRole('textbox', { name: 'Password:' }).fill('12345678');
+  await page.getByRole('button', { name: 'Log in' }).click();
+  await expect(page).toHaveURL('https://demo.nopcommerce.com/');
+});
+
+await page.goto('https://demo.nopcommerce.com/login?returnUrl=%2F');
+
+await page.goto('https://demo.nopcommerce.com/login?returnUrl=%2F');
 test('Missing Email and Password', async ({ page }) => {
   test.setTimeout(3600000); // Set timeout to 30 seconds
   await page.goto('https://demo.nopcommerce.com/login');
@@ -64,14 +77,4 @@ test('Invalid Credential Non Existing Account', async ({ page }) => {
   expect(errorMessage).toContain(
     'Login was unsuccessful. Please correct the errors and try again.\nNo customer account found',
   );
-});
-
-test('Correct Credential', async ({ page }) => {
-  await page.goto('https://demo.nopcommerce.com/login');
-  await page
-    .getByRole('textbox', { name: 'Email:' })
-    .fill('fikremariam.a.asegie@gmail.com');
-  await page.getByRole('textbox', { name: 'Password:' }).fill('12345678');
-  await page.getByRole('button', { name: 'Log in' }).click();
-  await expect(page).toHaveURL('https://demo.nopcommerce.com/');
 });

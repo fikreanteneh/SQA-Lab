@@ -1,0 +1,14 @@
+@startuml
+title Missing Email and Password Test
+left to right direction
+
+state "Start" as Start
+state "Login Page" as LoginPage
+state "Error Message Displayed" as ErrorMessage
+
+[*] --> Start
+Start --> LoginPage : Navigate to \nLogin Page
+LoginPage --> ErrorMessage : Click Log in Button
+ErrorMessage : Display "Please enter your email"
+
+@enduml

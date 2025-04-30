@@ -1,43 +1,51 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Reqres Register API', () => {
+test.describe('Reqres Register API - Full Equivalence Partitioning Tests', () => {
   const baseUrl = 'https://reqres.in/api';
 
   const testCases = [
     {
-      validity: true,
+      classType: 'Valid',
       description: 'Valid email and password',
-      payload: { email: 'eve.holt@reqres.in', password: 'pistol' },
+      payload: { email: 'eve.holt@reqres.in', password: 'ABcd@1234' },
       expectedStatus: 200,
     },
     {
-      validity: false,
+      classType: 'Invalid',
       description: 'Missing password',
       payload: { email: 'eve.holt@reqres.in' },
       expectedStatus: 400,
     },
     {
-      validity: false,
+      classType: 'Invalid',
       description: 'Missing email',
-      payload: { password: 'pistol' },
+      payload: { password: 'ABcd@1234' },
       expectedStatus: 400,
     },
     {
-      validity: false,
-      description: 'Not a correct email',
-      payload: { email: 'bademail', password: 'pistol' },
+      classType: 'Invalid',
+      description: 'Invalid email format',
+      payload: { email: '12345678', password: 'ABcd' },
       expectedStatus: 400,
     },
     {
-      validity: false,
+      classType: 'Invalid',
       description: 'Empty payload',
       payload: {},
       expectedStatus: 400,
     },
+    {
+      classType: 'Invalid',
+      description: 'Password too short',
+      payload: { email: 'eve.holt@reqres.in', password: 'AB' },
+      expectedStatus: 400, // Note: Reqres still returns 200 even if password is short!
+    },
   ];
 
   for (const testCase of testCases) {
-    test(testCase.description, async ({ request }) => {
+    test(`${testCase.classType}: ${testCase.description}`, async ({
+      request,
+    }) => {
       const response = await request.post(`${baseUrl}/register`, {
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +53,21 @@ test.describe('Reqres Register API', () => {
         },
         data: testCase.payload,
       });
+
       expect(response.status()).toBe(testCase.expectedStatus);
     });
   }
+
+  // Special test for Not Valid JSON
+  test('Invalid: Not Valid JSON format', async ({ request }) => {
+    const response = await request.post(`${baseUrl}/register`, {
+      headers: {
+        'x-api-key': 'reqres-free-v1',
+      },
+      // send string instead of object -> to simulate invalid JSON
+      data: 'this is not a valid json',
+    });
+
+    expect(response.status()).toBe(400);
+  });
 });

@@ -1,0 +1,17 @@
+@startuml
+title Successful Login Test
+left to right direction
+
+state "Start" as Start
+state "Login Page" as LoginPage
+state "Enter Email and Password" as EnterCredentials
+state "Home Page" as HomePage
+
+[*] --> Start
+Start --> LoginPage : Navigate to \nLogin Page
+LoginPage --> EnterCredentials : Enter Email and Password
+EnterCredentials --> HomePage : Click Log in Button
+EnterCredentials : testuser@gmail.com\nCorrectPassword123
+HomePage : Redirected to Home Page
+
+@endumlW

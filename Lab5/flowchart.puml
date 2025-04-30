@@ -1,0 +1,30 @@
+@startuml
+start
+:Home Page;
+:Click "Add to Cart in the Item";
+:Go to Item Page;
+:Insert Quantity;
+:Click "Add to Cart";
+while (Add more items?) is (yes)
+  :Go back to Home Page;
+  :Repeat Add to Cart Process;
+endwhile
+:Click "Shopping Cart";
+:View Items in Cart;
+if (Increase/Decrease Items?) then (yes)
+  :Adjust Quantity;
+endif
+if (Apply Coupon?) then (yes)
+  :Enter Coupon Code;
+endif
+:Check "I agree with the terms";
+:Click "Checkout";
+:Fill Billing Address;
+:Fill Shipping Address;
+:Select Shipping Method\n(Ground | Next Day Air | 2nd Day Air);
+:Select Payment Method\n(Check | Credit Card);
+:Enter Payment Information;
+:Click "Continue";
+:Click "Confirm";
+stop
+@enduml

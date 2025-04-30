@@ -1,0 +1,16 @@
+@startuml
+title Invalid Credentials Test
+
+state "Start" as Start
+state "Login Page" as LoginPage
+state "Enter Email and Password" as EnterCredentials
+state "Error Message Displayed" as ErrorMessage
+
+[*] --> Start
+Start --> LoginPage : Navigate to \nLogin Page
+LoginPage --> EnterCredentials : Enter Email and Password
+EnterCredentials --> ErrorMessage : Click Log in Button
+EnterCredentials : testuser@gmail.com\nInvalidPassword123
+ErrorMessage : Display "Login was unsuccessful.\nPlease correct the errors and try again.\nNo customer account found"
+
+@enduml
